@@ -11,6 +11,9 @@ cache:
     - $HOME/.gradle/wrapper/
 
 
+before_script:
+  - ./gradlew --version
+
 script:
   - ./gradlew test
 
