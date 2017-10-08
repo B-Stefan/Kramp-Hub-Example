@@ -1,4 +1,4 @@
-# Kramphub Example 
+# Kramp Hub Example
 
 
 ## Getting started 
