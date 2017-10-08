@@ -1,5 +1,5 @@
 # Kramp Hub Example
-
+[![Build Status](https://travis-ci.org/B-Stefan/Kramp-Hub-Example.svg?branch=master)](https://travis-ci.org/B-Stefan/Kramp-Hub-Example)
 
 ## Getting started 
 
