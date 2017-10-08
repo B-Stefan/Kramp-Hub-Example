@@ -10,6 +10,7 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
+install: true
 
 before_script:
   - ./gradlew --version
