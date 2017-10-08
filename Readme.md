@@ -21,3 +21,8 @@ $ ./gradlew test
 
 * Java 9 
 
+
+## Project structure 
+
+The project is structured according to the [spring guidelines](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-structuring-your-code.html)
+
