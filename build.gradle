@@ -19,6 +19,18 @@ apply plugin: 'org.springframework.boot'
 
 sourceCompatibility = 1.8
 
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Kramphub example',
+                'Implementation-Version': version,
+                'Main-Class': 'kramphub.example.Application'
+    }
+}
+
+
+defaultTasks 'test'
+
+
 repositories {
     mavenCentral()
 }
