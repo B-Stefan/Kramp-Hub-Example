@@ -1,5 +1,6 @@
 group 'kramphub'
-version '1.0-SNAPSHOT'
+String tag = System.getenv('TRAVIS_TAG') ?: "v1.0.0"
+version "${tag}-SNAPSHOT"
 
 String mainClass = 'kramphub.example.Application'
 
