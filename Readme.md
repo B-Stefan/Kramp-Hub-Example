@@ -32,3 +32,8 @@ $ ./gradlew test
 
 The project is structured according to the [spring guidelines](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-structuring-your-code.html)
 
+## Release management 
+
+To release a new version set a tag by using the [Semantic Versioning 2.0.0]()http://semver.org/) standard. 
+After you pushed your tag to the repository (`git push --tags`) travis creates a new release for you.I 
+If appropriate please add more information to the github release.
