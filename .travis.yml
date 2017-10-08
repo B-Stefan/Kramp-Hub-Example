@@ -22,7 +22,7 @@ deploy:
      api_key:
           secure: "MJ76nTsD78cU92+ynrVu9e527DLopCSjfIKtgxa1yiMpcxkzD7d+d9O2NDi9e0/bATabhrOltQ+a7amhAgUze76/ZVtpt1+GVOspY5QiA+12PfkHUeHUlva8hw+IXvzdpCfDoXiPu2DVgT8+6Kpb8XunrLDDwGszbWf0Sz1aY/3bSdNU+sapoEyern1keBa5x7bX9neUKtJGR7OEm1LeAFfXY7Dh4W6q2GN48+zgf95deWArHouS5T3yDcwxO342lXFOBz2Jm/yMpjXevS0MeQ3njFGsWdCGtDtcFcmtD0XT+N7nrs/dPNul3c6UJvOkuoZGoFOzFiJl5YuFH0gmiciPffyiTzrbdJY05Ot2+7mrL0kXUIISDqYMYkaiTLZJw9etYhE3wpxKQa7YBALTU8LlKV1kHXtDQOwsFbx+SOxgnAFVal7j0ChGTcKleu38sCBBaEpNaMRskYteT/Xk7bq3hidK8rTusAxmNeOxgk8jJRozlagIuUYtslaeijxTJPoUuc6+aQ9YF2HA79USU5swF+bKaw/jeFf4MbF1OLiwATxz9vqRNoKhU2ITOJe0dw4m65zNHleilO8lrfFfSM7WG5ry7ZM6IYkoRkMeACdcbCZ+Jjyp6Nx2ZNZu+FBBQUFsQm0ArGFCJ5DiT27jMjIw+19ID7bTix6LuWcODss="
      file:
-         - $HOME/build/libs/kramphub-$TRAVIS_TAG-SNAPSHOT
+         - ./build/libs/kramphub-$TRAVIS_TAG-SNAPSHOT
      skip_cleanup: true
      on:
          tags: true
