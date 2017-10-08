@@ -1,4 +1,4 @@
-package kramphub.example;
+package kramphub.example.hello;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
