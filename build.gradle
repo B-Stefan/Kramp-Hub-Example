@@ -1,6 +1,7 @@
 group 'kramphub'
 version '1.0-SNAPSHOT'
 
+String mainClass = 'kramphub.example.Application'
 
 buildscript {
     repositories {
@@ -11,8 +12,6 @@ buildscript {
     }
 }
 
-
-apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
@@ -23,8 +22,21 @@ jar {
     manifest {
         attributes 'Implementation-Title': 'Kramphub example',
                 'Implementation-Version': version,
-                'Main-Class': 'kramphub.example.Application'
+                'Main-Class': mainClass
     }
+    from {
+        configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+
+}
+
+springBoot {
+    mainClass = mainClass
+    executable = true
 }
 
 
