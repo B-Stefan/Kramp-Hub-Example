@@ -1,14 +1,20 @@
 # Kramp Hub Example
-[![Build Status](https://travis-ci.org/B-Stefan/Kramp-Hub-Example.svg?branch=master)](https://travis-ci.org/B-Stefan/Kramp-Hub-Example)
+[![Build Status](https://travis-ci.org/B-Stefan/Kramp-Hub-Example.svg?branch=master)](https://travis-ci.org/B-Stefan/Kramp-Hub-Example) [![codebeat badge](https://codebeat.co/badges/0ff451b6-8e53-48c5-b90b-eb573c6db4d1)](https://codebeat.co/projects/github-com-b-stefan-kramp-hub-example-master)
 
 ## Getting started 
 
 ### Running 
 
-Go the the project root in your terminal and execute the following command: 
+Navigate into the project root folder and execute the following command in your terminal: 
 
+*Linux*
 ```
 $ ./gradlew bootRun
+```
+
+*Windows*
+```
+ > gradlew.bat bootRun
 ```
  
 ### Testing 
