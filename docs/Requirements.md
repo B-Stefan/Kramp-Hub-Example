@@ -5,9 +5,9 @@ This documents represents the requiremnts for this project work.
 ## Features  
 
 
- | Description  | Status  | Comment | 
+ | Description  | Status  | Comment |
  |---|---|---|
- | Setup project (Hello world)    | 😎    || 
+ | Setup project (Hello world)    | 😎    ||
  | Setup CI     | 😎    ||
  | Setup CD (Docker, Jar release)    | 😎    ||
  | Setup first tests    | 😎    ||
