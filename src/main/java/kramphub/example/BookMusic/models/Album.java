@@ -1,7 +1,5 @@
-package kramphub.example.BookMusic.models;
+package kramphub.example.bookmusic.models;
 
-
-import kramphub.example.BookMusic.models.IBookMusicEntry;
 
 import java.io.Serializable;
 

@@ -3,16 +3,12 @@ package kramphub.example.bookmusic;
 import com.codahale.metrics.annotation.Metered;
 import kramphub.example.bookmusic.services.GoogleBookService;
 import kramphub.example.bookmusic.services.ItunesService;
-import kramphub.example.bookmusic.models.Book;
 import kramphub.example.bookmusic.models.IBookMusicEntry;
-import org.apache.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import sun.rmi.runtime.Log;
-import sun.security.pkcs11.wrapper.Functions;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
