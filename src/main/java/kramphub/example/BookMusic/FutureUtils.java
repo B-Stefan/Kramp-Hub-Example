@@ -1,8 +1,10 @@
 package kramphub.example.BookMusic;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import kramphub.example.BookMusic.models.Album;
+
+import java.util.List;
+import java.util.concurrent.*;
+import java.util.function.Function;
 
 public class FutureUtils {
 
@@ -15,5 +17,16 @@ public class FutureUtils {
             }
         });
     }
+    public static  <T> CompletableFuture<T> withTimeoutException(CompletableFuture<T> future, long timeout, TimeUnit unit, ScheduledThreadPoolExecutor delayer){
+        return future.applyToEither(
+                FutureUtils.withTimeoutException(timeout, unit,delayer),
+                Function.<T>identity());
+    }
+    public static  <T> CompletableFuture<T>  withTimeoutException(long timeout, TimeUnit unit,ScheduledThreadPoolExecutor delayer){
+        CompletableFuture<T> result = new CompletableFuture<T>();
+        delayer.schedule(() -> result.completeExceptionally(new TimeoutException()), timeout, unit);
+        return result;
+    }
+
 
 }

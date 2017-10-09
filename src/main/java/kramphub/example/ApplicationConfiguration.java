@@ -8,6 +8,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.AsyncRestTemplate;
 
 import java.util.Collections;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 @Configuration
 public class ApplicationConfiguration {
@@ -24,4 +25,14 @@ public class ApplicationConfiguration {
         return asycTemp;
 
     }
+
+    /**
+     *
+     * @todo handle scaling dynamicly.... Just set it to two because it we have only two api endpoint.
+     */
+    @Bean
+    public ScheduledThreadPoolExecutor poolExecutor() {
+      return new ScheduledThreadPoolExecutor(2);
+    }
+
 }

@@ -1,5 +1,6 @@
 package kramphub.example.BookMusic;
 
+import com.codahale.metrics.annotation.Metered;
 import javafx.beans.binding.ObjectBinding;
 import kramphub.example.BookMusic.services.ItunesService;
 import kramphub.example.BookMusic.models.Album;
@@ -36,32 +37,23 @@ public class BookMusicController {
     }
 
 
-    private ScheduledThreadPoolExecutor delayer = new ScheduledThreadPoolExecutor(2);
-
-    public <T> CompletableFuture<T> timeoutAfter(long timeout, TimeUnit unit) {
-        CompletableFuture<T> result = new CompletableFuture<T>();
-        delayer.schedule(() -> result.completeExceptionally(new TimeoutException()), timeout, unit);
-        return result;
+    @Metered
+    private List<Album> onTimeoutOfExternalService(Throwable e){
+        return new ArrayList<>();
     }
-
 
 
     @RequestMapping("/entries")
     @ResponseBody
+    @Metered
     public List<IBookMusicEntry> getBooksAndMusic(@NotNull @RequestParam String query ) throws ExecutionException, InterruptedException {
 
         final List<Book> books = this.getBooks();
         final CompletableFuture<List<Album>> albumsFuture = itunesService.getAlbumBySearchTerm(query);
 
 
-
-        final List<Album> albums = albumsFuture.applyToEither(
-                    timeoutAfter(30, TimeUnit.SECONDS),
-                    Function.<List<Album>>identity())
-                .exceptionally((exception)-> {
-                    System.out.println(exception.getMessage());
-                    return new ArrayList<Album>();
-                })
+        final List<Album> albums = albumsFuture
+                .exceptionally(this::onTimeoutOfExternalService)
                 .get();
 
         return  Stream
