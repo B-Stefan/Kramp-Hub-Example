@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>kramphub.example</OriginalElement>
+  <nodes>
+    <node x="389.0" y="377.0">kramphub.example.bookmusic.BookMusicController</node>
+    <node x="0.0" y="948.0">kramphub.example.ApplicationTest</node>
+    <node x="0.0" y="0.0">kramphub.example.bookmusic.services.GoogleBookService</node>
+    <node x="0.0" y="807.0">kramphub.example.bookmusic.FutureUtils</node>
+    <node x="702.0" y="135.0">kramphub.example.bookmusic.models.Book</node>
+    <node x="60.0" y="236.0">kramphub.example.bookmusic.services.GoogleBookService.GoogleBookResponse</node>
+    <node x="870.0" y="124.0">kramphub.example.bookmusic.models.Album</node>
+    <node x="0.0" y="621.0">kramphub.example.bookmusic.services.ItunesServiceTest</node>
+    <node x="60.5" y="501.0">kramphub.example.ApplicationConfiguration.PerfRequestSyncInterceptor</node>
+    <node x="405.5" y="236.0">kramphub.example.bookmusic.services.ItunesService.ItunesSearchResponse</node>
+    <node x="502.0" y="807.0">kramphub.example.bookmusic.services.GoogleBookServiceTest</node>
+    <node x="0.0" y="377.0">kramphub.example.ApplicationConfiguration</node>
+    <node x="470.0" y="948.0">kramphub.example.hello</node>
+    <node x="239.0" y="948.0">kramphub.example.Application</node>
+    <node x="363.0" y="621.0">kramphub.example.bookmusic.BookMusicControllerTest</node>
+    <node x="788.0" y="0.0">kramphub.example.bookmusic.models.IBookMusicEntry</node>
+    <node x="351.0" y="0.0">kramphub.example.bookmusic.services.ItunesService</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="kramphub.example.bookmusic.services.GoogleBookService.GoogleBookResponse" target="kramphub.example.bookmusic.services.GoogleBookService">
+      <point x="0.0" y="-48.0" />
+      <point x="0.0" y="93.0" />
+    </edge>
+    <edge source="kramphub.example.bookmusic.models.Album" target="kramphub.example.bookmusic.models.IBookMusicEntry">
+      <point x="0.0" y="-48.0" />
+      <point x="954.0" y="99.0" />
+      <point x="903.5" y="99.0" />
+      <point x="38.5" y="37.0" />
+    </edge>
+    <edge source="kramphub.example.bookmusic.services.ItunesService.ItunesSearchResponse" target="kramphub.example.bookmusic.services.ItunesService">
+      <point x="0.0" y="-37.0" />
+      <point x="0.0" y="93.0" />
+    </edge>
+    <edge source="kramphub.example.bookmusic.models.Book" target="kramphub.example.bookmusic.models.IBookMusicEntry">
+      <point x="0.0" y="-37.0" />
+      <point x="776.0" y="99.0" />
+      <point x="826.5" y="99.0" />
+      <point x="-38.5" y="37.0" />
+    </edge>
+    <edge source="kramphub.example.ApplicationConfiguration.PerfRequestSyncInterceptor" target="kramphub.example.ApplicationConfiguration">
+      <point x="0.0" y="-37.5" />
+      <point x="0.0" y="37.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6204650458229191" x="479.19866943359375" y="332.521728515625" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
