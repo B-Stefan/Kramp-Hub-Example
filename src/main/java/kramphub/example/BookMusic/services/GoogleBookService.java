@@ -3,6 +3,7 @@ package kramphub.example.bookmusic.services;
 
 import kramphub.example.bookmusic.FutureUtils;
 import kramphub.example.bookmusic.models.Book;
+import kramphub.example.bookmusic.models.IBookMusicEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.client.AsyncRestTemplate;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -68,7 +70,6 @@ public class GoogleBookService {
        private List<Book> items;
 
     }
-
     public CompletableFuture<List<Book>> getBookBySearchTerm(String title) {
         return this.getBookBySearchTerm(title,DEFAULT_LIMIT);
     }

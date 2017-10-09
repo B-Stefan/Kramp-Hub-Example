@@ -1,46 +1,67 @@
 package kramphub.example.bookmusic;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import kramphub.example.bookmusic.models.Album;
+import kramphub.example.bookmusic.models.Book;
+import kramphub.example.bookmusic.models.IBookMusicEntry;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
+import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BookMusicControllerTest {
 
-    @LocalServerPort
-    private int port;
-
     @Autowired
-    private TestRestTemplate restTemplate;
+    private BookMusicController controller;
 
     @Test
-    public void controllerShouldReturn10Items() throws Exception {
-        List<?> list = this.restTemplate.getForObject("http://localhost:" + port + "/entries?term=sido", List.class);
-        assertThat(list.size()).isEqualTo(10);
+    public void getEntiresShouldReturn10()
+            throws Exception {
+
+        List<IBookMusicEntry> result = controller.getBooksAndMusic("Test");
+        Assert.assertEquals(10,result.size());
+
     }
 
     @Test
-    public void controllerShouldReturnZeroItems() throws Exception {
-        List<?> list = this.restTemplate.getForObject("http://localhost:" + port + "/entries?term=adjasdjsdjasjdasdjasdhafhasdbasdasdhasdhasdhasdh", List.class);
-        assertThat(list.size()).isEqualTo(0);
+    public void getBooksAndMusicShouldReturn5Albums()
+            throws Exception {
+
+        List<IBookMusicEntry> result = controller.getBooksAndMusic("Test");
+
+        Assert.assertEquals(5,result.stream()
+                .filter(e -> e.getType().equals(Album.class.getSimpleName()))
+                .count());
+
     }
 
     @Test
-    public void controllerShouldReturnError() throws Exception {
-        List<?> list = this.restTemplate.getForObject("http://localhost:" + port + "/entries?term=adjasdjsdjasjdasdjasdhafhasdbasdasdhasdhasdhasdh", List.class);
-        assertThat(list.size()).isEqualTo(0);
+    public void getBooksAndMusicShouldReturn5Books()
+            throws Exception {
+
+        List<IBookMusicEntry> result = controller.getBooksAndMusic("Test");
+
+        Assert.assertEquals(5, result.stream()
+                .filter(e -> e.getType().equals(Book.class.getSimpleName()))
+                .count());
+
     }
 
+    @Test
+    public void getBooksAndMusicShouldZeroBooksAndMusic()
+            throws Exception {
 
+        List<IBookMusicEntry> result = controller.getBooksAndMusic("asdjasdhkasdhasdhs");
 
+        System.out.print("YEEEEEHA" + result.toString());
+        Assert.assertEquals(0, result.size());
 
+    }
 }

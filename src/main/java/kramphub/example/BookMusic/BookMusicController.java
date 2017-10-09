@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.*;
@@ -53,31 +54,30 @@ public class BookMusicController {
     @Metered
     public List<IBookMusicEntry> getBooksAndMusic(@NotNull @RequestParam String query ) throws ExecutionException, InterruptedException {
 
-        List<CompletableFuture<?>> futures = new ArrayList<>();
+        List<CompletableFuture<List<IBookMusicEntry>>> futures = new ArrayList<>();
 
-        futures.add(itunesService.getAlbumBySearchTerm(query));
-        futures.add(googleBookService.getBookBySearchTerm(query));
+        futures.add(itunesService.getAlbumBySearchTerm(query)
+                .thenApply((list)-> new ArrayList<>(list))); // Not pretty solution for a nested implicit typing problem with java
+        futures.add(googleBookService.getBookBySearchTerm(query)
+                .thenApply((list)-> new ArrayList<>(list)));
 
 
 
-        CompletableFuture<List<?>> listCompletableFuture = CompletableFuture
+        //Build future for all service request in the list and store and concat the result to a big list.
+        CompletableFuture<List<IBookMusicEntry>> listCompletableFuture = CompletableFuture
                 .allOf(futures.toArray(new CompletableFuture[futures.size()]))
                 .thenApply(v -> {
-                    return futures.stream().
-                            map(CompletableFuture::join).
-                            collect(Collectors.toList());
+                    return futures.stream()
+                            .map(CompletableFuture::join)
+                            .flatMap(List::stream)
+                            .collect(Collectors.toList());
                     });
 
 
-
         return listCompletableFuture
-                .exceptionally(this::onTimeoutOfExternalService)
-                .get()
-                .stream()
-                .map((item)-> (List<IBookMusicEntry>)item) //
-                // Bad casting because Java 8 don't understand nested generics...
-                // Find a better solution for this would be the first thing I would do.
-                .flatMap(List::stream)
+                .exceptionally(this::onTimeoutOfExternalService) //Catch errors and provide alternative data
+                .get() //trigger the actual get -> Blocking thread until all futures resolved
+                .stream() // transform data into actual result
                 .sorted(Comparator.comparing(IBookMusicEntry::getName))
                 .collect(Collectors.toList());
     }
