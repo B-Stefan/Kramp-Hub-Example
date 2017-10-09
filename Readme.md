@@ -31,6 +31,7 @@ $ ./gradlew test
 ## Project structure 
 
 The project is structured according to the [spring guidelines](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-structuring-your-code.html)
+Files for the requirements and architecture are locaed in the [docs](./docs) folder. 
 
 ## Release management 
 
