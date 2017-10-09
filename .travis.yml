@@ -1,30 +1,38 @@
 language: java
-
-
-#See: https://docs.travis-ci.com/user/languages/java/ for more instructions
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
 before_script:
-  - ./gradlew --version
-
+- "./gradlew --version"
 script:
-  - ./gradlew test
+- "./gradlew test"
 
+after_success:
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - export REPO=stefan125/kramphubExample
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker build -f Dockerfile -t $REPO:$COMMIT .
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker push $REPO
 
 deploy:
-     provider: releases
-     api_key:
-          secure: "MJ76nTsD78cU92+ynrVu9e527DLopCSjfIKtgxa1yiMpcxkzD7d+d9O2NDi9e0/bATabhrOltQ+a7amhAgUze76/ZVtpt1+GVOspY5QiA+12PfkHUeHUlva8hw+IXvzdpCfDoXiPu2DVgT8+6Kpb8XunrLDDwGszbWf0Sz1aY/3bSdNU+sapoEyern1keBa5x7bX9neUKtJGR7OEm1LeAFfXY7Dh4W6q2GN48+zgf95deWArHouS5T3yDcwxO342lXFOBz2Jm/yMpjXevS0MeQ3njFGsWdCGtDtcFcmtD0XT+N7nrs/dPNul3c6UJvOkuoZGoFOzFiJl5YuFH0gmiciPffyiTzrbdJY05Ot2+7mrL0kXUIISDqYMYkaiTLZJw9etYhE3wpxKQa7YBALTU8LlKV1kHXtDQOwsFbx+SOxgnAFVal7j0ChGTcKleu38sCBBaEpNaMRskYteT/Xk7bq3hidK8rTusAxmNeOxgk8jJRozlagIuUYtslaeijxTJPoUuc6+aQ9YF2HA79USU5swF+bKaw/jeFf4MbF1OLiwATxz9vqRNoKhU2ITOJe0dw4m65zNHleilO8lrfFfSM7WG5ry7ZM6IYkoRkMeACdcbCZ+Jjyp6Nx2ZNZu+FBBQUFsQm0ArGFCJ5DiT27jMjIw+19ID7bTix6LuWcODss="
-     file:
-         - ./build/libs/kramphub-$TRAVIS_TAG-SNAPSHOT.jar
-     skip_cleanup: true
-     on:
-         tags: true
-
-
+  provider: releases
+  api_key:
+    secure: MJ76nTsD78cU92+ynrVu9e527DLopCSjfIKtgxa1yiMpcxkzD7d+d9O2NDi9e0/bATabhrOltQ+a7amhAgUze76/ZVtpt1+GVOspY5QiA+12PfkHUeHUlva8hw+IXvzdpCfDoXiPu2DVgT8+6Kpb8XunrLDDwGszbWf0Sz1aY/3bSdNU+sapoEyern1keBa5x7bX9neUKtJGR7OEm1LeAFfXY7Dh4W6q2GN48+zgf95deWArHouS5T3yDcwxO342lXFOBz2Jm/yMpjXevS0MeQ3njFGsWdCGtDtcFcmtD0XT+N7nrs/dPNul3c6UJvOkuoZGoFOzFiJl5YuFH0gmiciPffyiTzrbdJY05Ot2+7mrL0kXUIISDqYMYkaiTLZJw9etYhE3wpxKQa7YBALTU8LlKV1kHXtDQOwsFbx+SOxgnAFVal7j0ChGTcKleu38sCBBaEpNaMRskYteT/Xk7bq3hidK8rTusAxmNeOxgk8jJRozlagIuUYtslaeijxTJPoUuc6+aQ9YF2HA79USU5swF+bKaw/jeFf4MbF1OLiwATxz9vqRNoKhU2ITOJe0dw4m65zNHleilO8lrfFfSM7WG5ry7ZM6IYkoRkMeACdcbCZ+Jjyp6Nx2ZNZu+FBBQUFsQm0ArGFCJ5DiT27jMjIw+19ID7bTix6LuWcODss=
+  file:
+  - "./build/libs/kramphub-$TRAVIS_TAG-SNAPSHOT.jar"
+  skip_cleanup: true
+  on:
+    tags: true
+env:
+  global:
+  - secure: zfzZY3hcbMflDxRVxixS3+su7yVARZnLLXFyzeJI4+WJuVRLuEq5Su1yz/kEWau52B1x6HrEkRfBOLtuoRsb/juN101j8vmCw5XOKE6axB/L4QgTKlEaUDhXC0WZCTamxEIkiM2W51B724DGltUHI4uvW7cB789NzW6b5SPMsoJKSKXsm3rSjixhD1LLMtc/D7ug458CuxbeW5se5mXfNrtRQM3qgg71J9QtVNRo/hWT9oj8X7+6yLgWye9R8GTS5lUu+ChDanRIicRbpMzOaWXN3BD18TcEU8On3eXDiOLCwnypRFkIZ1tDYyoPq54hnFpFCZ9PL8DYbMIkcPmeKkgNBtTHx+AE7KzYbgyfNKnJIO32m9McHZ3NleafukJC3TeHMV/LeqbN1KTl6KU3x0ja/2nYFGDnhdOwhW5lWdYju2Kvcbk2NrPCNEKut8msy7OtKN5gEE9Ubh3e9tgeIEfW2jpidqWXsZ+Ju0vXhYeOH9Bq07GQy9amxqfzLsVPnuqaOrr+FtYt8va651c6u4DksuoVTBcQp0waJImKV1K8916GAK5+9QfLRS8UCPO+tI/4biZTszSewzrotKYF5CfPVtzzBzcVe365056mnMuLNKZvui19BZ+HuCVvRzwS6F+hS2d0y1HFrEyh5005bTncCWT0UTtu1DRJRV0CWRw=
+  - secure: sCJ1dtu8kPVefVY1pDP0pVttQmby8QBrhjX+V3bmRfAd0qCOd4gjOAJdQFQ0LWxdjGYS1EZm169XFAxU7La/2lMM2NQ9gv0aJRDGWSmzRZZU0oB5C+Zt7JY5ddlOeIVAzQIJj4rXy8ZI4NLhdaMIUPQFLGSBzgqraztRlPhQ0hfgMoFaezmDB2/92EsvgvazTKw9VlZRPCkEenlnUewylQDfT43AlMqvI9xxAUl0SPlGgTfInr1QoLLJ1Mv3QiMO7cdm2aw8rvzaIUikFOqNSf2AFTGvYXvqXaAe1i7+t7YfHxgkhRXBNQPRAEWLpCpMm/W4wG0qCcRxnPUiMxr8PbZk+8Y9lIJgaDUIrMV2kZh/mKJOmEflBo5+qeigWlUCv8VDrbHksCtOhNCBE20lf0eqxjvZ4wAx5fBMx9OjhAbuLaikfZ0eXNxxVuZtH5z9pTuHfdiGoqisg2H50cffpi0nY4bFY+ibZAK7VodefK35DciRdGeK8CjjcsN6M6LmFm9mRB7RNLi6mNOYOEAlqii1YGcfHkY5AbgZyCmzxSVuQkIirVSStqqHc1O8lrVnR3uYOnz8RKDv+8Nqhh0MSgqGLZePhXNiNdPOOrPrk918hPCT4UDBosJ/42XzgSrxQcQGLZ1WvC9OzLD3f76t8vouuiLgCaBkxCb0/4cdIIs=
+  - secure: Hf8yVREQUMRR0MljIDPGLkKEf/mh+Zp4M3y9RgkvwT6eLSH/zFL7fPJOZrQiWkyXiyzU6r5UW5KgmwlaUKsjlBC/+9O8oqnJBkvIRy/9Am0KXq4KwjHlbGThj1WsL7y9ZpgXaHrdpZ8/S8b4jr7fxyHo2mYeLOA5fcRp3zcQNJRHDT/B45f2B92Oi9xY9ufbvBOS6lwSpGCPUIeS67Llvhia9DOrEguwChuf289990oWHNdZYflXcdqgqCbO6NYvg30R9ne39dMxBrjEJr2tPcMatMVh09aBhz9MxDT7GmWyVQXgZRa+VbxTusoRHq5Szq9rdMxiIASVLgq/39weR1QCcgNBXdOC/LEBSoZxtozBow16r+C5Ye/+3X14qfour2I4scKJfmUkbnd1xH5uqFfY/cxpIMjd5xIMhTqKopWlouVnqdsVqYQ0zSgtAP/6mfrCojH1U4yp41LeEPfWheGQYZsV2vB9fh/QPO+ANr0I6wbcslZKOnTM2zQwmYPQbt44ZxhFeg1LQupld+O8SvOomrCjT7EMac6Z5XMlTvRUXDdYBZLrZU8sRfjw/DqkY+ur9+Gmdt8uqBl0ZHq5J6ffGfPrc1WrXl/bzD903nlAVo9mK+eCqLhz36OnEHWWZxN1YTvOxwxWj/0jkCn0uPuwLCpJ86c8opHe9bkF00w=
+  - secure: xf9SvoaPHeCXJpSPpKcrnzWlT1GDyQ6POqkOzo5XX1tNIDBQAjrst979nuSkp6YhhvMCnIu2vIqsoVjwOm+UCOBBc6xUw00I3ZDLMEI6blo6xXBP+5931p8iHxMnOwl0L0mownyb/eTvP2ZVkOcEMUKVqUkGv9b18J2owtzC4ITBCmka9DMKz1oKfXhYcNBL6TFxlhzTreshLj9rx818z1cNyrbKyr1Zt18bnotBbLSv7dIzUHXQY4oI2IVJqnKnqxc24WFYUp/FGlkQxOZ37xUPq0c/XHDbQr9R0J+SisA56hFTBpRM589342FuSIXyD/7hhuLFhJadh0nN0WwyctxcQ5uVRk93kul3kniA/EafnM5HbqE7HCPxfSAnwRRMZtrf079ctsbptNWxmz4hEDEQ0ZltP2mB8YJX5NvtYoWgU4TtFNfBXeseRZ8RxR69v24HwKBc92tG+JgZ19YY2z4N9lHTDnvXxsNV5c1HNOqK8GyU3LYSUf5OA/MxOuPjmzRZnVO6l6pjQb7RneKxW1RvnG4jEaRjvm1LmABus4kdIAWjMQRQwZDUgplx1ewyjS+OaCsDhvR5gPfX9L4RwUxssm+TEdZ/nTWkWoE7lmstq0WpD/V4lg8rkgYMlMXF5+SXA1c5kfcCNfHLda8mxRr0gljIQmk5Go95lgGvKmI=
+  - COMMIT=${TRAVIS_COMMIT::8}

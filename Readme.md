@@ -7,6 +7,12 @@
 
 Navigate into the project root folder and execute the following command in your terminal: 
 
+*Docker*
+```
+$ docker run . 
+
+```
+
 *Linux*
 ```
 $ ./gradlew bootRun
@@ -17,6 +23,10 @@ $ ./gradlew bootRun
  > gradlew.bat bootRun
 ```
  
+
+ Open your browser on [http://localhost:8080/entries?term=your-search-term](http://localhost:8080/entries?term=your-search-term)
+ To monitor the application use the url [localhost:8080/stagemonitor](localhost:8080/stagemonitor)
+ 
 ### Testing 
 
 ```
@@ -25,7 +35,7 @@ $ ./gradlew test
 
 ## Requirements 
 
-* Java 9 
+* Java 8
 
 
 ## Project structure 
