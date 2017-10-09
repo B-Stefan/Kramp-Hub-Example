@@ -1,8 +1,5 @@
-package kramphub.example.BookMusic;
+package kramphub.example.bookmusic;
 
-import kramphub.example.BookMusic.models.Album;
-
-import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.Function;
 

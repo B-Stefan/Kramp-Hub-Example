@@ -1,4 +1,4 @@
-package kramphub.example.BookMusic.models;
+package kramphub.example.bookmusic.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

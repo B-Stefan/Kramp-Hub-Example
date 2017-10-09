@@ -1,14 +1,16 @@
-package kramphub.example.BookMusic.services;
+package kramphub.example.bookmusic.services;
 
 
-import kramphub.example.BookMusic.FutureUtils;
-import kramphub.example.BookMusic.models.Album;
+import kramphub.example.bookmusic.FutureUtils;
+import kramphub.example.bookmusic.models.Album;
+import kramphub.example.bookmusic.models.IBookMusicEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.client.AsyncRestTemplate;
+import sun.nio.cs.ext.IBM037;
 
 
 import java.io.Serializable;
@@ -59,7 +61,6 @@ public class ItunesService {
             this.results = results;
         }
     }
-
     public CompletableFuture<List<Album>> getAlbumBySearchTerm(String title) {
         return this.getAlbumBySearchTerm(title,DEFAULT_LIMIT);
     }
