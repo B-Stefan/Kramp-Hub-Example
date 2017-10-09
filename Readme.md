@@ -9,7 +9,7 @@ Navigate into the project root folder and execute the following command in your 
 
 *Docker*
 ```
-$ docker run . 
+$  docker run -p 8080:8080 stefan125/kramphub
 
 ```
 
